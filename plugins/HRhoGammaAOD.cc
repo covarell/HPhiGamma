@@ -39,7 +39,7 @@ void HRhoGammaAOD::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   event_number = iEvent.id().event();
 
   genH_m        = -10.;
-  genMeson_m    = -10. ;
+  genMeson_m    = -10.;
   genMeson_eta  = -10.;
   genMeson_phi  = -10.;
   genMeson_pT   = -10.;

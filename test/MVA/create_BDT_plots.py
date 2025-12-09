@@ -102,7 +102,10 @@ def BDT_output():
     h_BDT_Train_bkg.SetMarkerStyle(21)
     h_BDT_Train_sig.Draw("SAME, lep")
     h_BDT_Train_bkg.Draw("SAME, lep")
-    h_BDT_sig.SetMaximum(6.0)
+
+    canvas1.SetLogy()
+    h_BDT_sig.SetMaximum(50*h_BDT_sig.GetMaximum())
+
     leg1.Draw("SAME")
     channel_text.Draw("SAME")
     #SR_text.Draw("SAME")

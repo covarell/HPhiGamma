@@ -18,7 +18,6 @@ isPhi = False
 isRho = False
 isK0s = False
 
-
 #note that in python true = 1 and false = 0
 if int(sys.argv[3]) == 1:
     isPhi = True
@@ -30,7 +29,7 @@ if int(sys.argv[3]) == 2:
     isK0s = True
     print "H -> K0sGamma analysis"
 
-inputnames = ["Signal"]
+inputnames = ["Data","SignalggH"]
 
 list_inputfiles = []
 for filename in sys.argv[4:]:
@@ -53,6 +52,8 @@ histo_container = [] #just for memory management
 list_histos = []
 #signalfile = ROOT.TFile("histos/latest_production/histos_SR_preselection_SignalggH.root")
 signalfile = ROOT.TFile(sys.argv[4])
+datafile = ROOT.TFile("histos/latest_production/histos_All_preselection_Data.root")
+list_inputfiles.append(datafile)
 
 keylist = signalfile.GetListOfKeys()
 key = ROOT.TKey()

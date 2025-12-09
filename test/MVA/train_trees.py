@@ -4,6 +4,7 @@ import argparse
 
 #INPUT FILES
 fIn_bkg  = ROOT.TFile("../histos/latest_production/histos_CR_preselection_Sidebands.root")
+#fIn_bkg  = ROOT.TFile("../histos/latest_production/histos_All_preselection_Data.root")
 #tree_bkg = fIn_bkg.Get("tree_output_forMVA")
 tree_bkg = fIn_bkg.Get("tree_output")
 fIn_sig  = ROOT.TFile("../histos/latest_production/histos_SR_preselection_SignalggH.root")
@@ -68,6 +69,9 @@ dataloader.SetWeightExpression("_BDTweight") #_BDTweight is the weight variable 
 
 mycutSig = ROOT.TCut("")
 mycutBkg = ROOT.TCut("")
+#bkgLeftSB  = ROOT.TCut("(mesonMass>0.58)&&(mesonMass<0.62)")
+#bkgRightSB = ROOT.TCut("(mesonMass>0.92)&&(mesonMass<1.)")
+#mycutBkg = ROOT.TCut("((mesonMass>0.58)&&(mesonMass<0.62))||((mesonMass>0.92)&&(mesonMass<1.))")
 
 
 dataloader.PrepareTrainingAndTestTree(mycutSig, mycutBkg, ":".join(["!V","nTrain_Signal=0:nTrain_Background=0:nTest_Signal=0:nTest_Background=0"]))
@@ -86,6 +90,12 @@ method_btd    = factory.BookMethod(dataloader, ROOT.TMVA.Types.kBDT, "BDT", ":".
 factory.TrainAllMethods()
 factory.TestAllMethods()
 factory.EvaluateAllMethods()
+
+h2D = dataloader.GetCorrelationMatrix("Signal")
+canvas = ROOT.TCanvas()
+canvas.cd()
+h2D.Draw("colz text")
+#canvas.SaveAs("~/cernbox/www/corr.pdf")
 
 fOut.Close()
 

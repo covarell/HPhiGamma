@@ -7,14 +7,13 @@ from array import array
 from functions_smuggler import Simplified_Workflow_Handler
 
 #bools
-debug          = False
- #Bool for verbose
+debug          = False #Bool for verbose
 #isSys          = True
 
 #Following bools are given as input
 isDataBlind    = False #Bool for blind analysis
 isBDT          = False #BDT bool
-isPhiAnalysis  = False # for H -> Phi Gamma
+isPhiAnalysis  = False # for H -> Phi Gammatefun
 isRhoAnalysis  = False # for H -> Rho Gamma
 isK0sAnalysis  = False # for H -> K0star Gamma
 isPhotonEtaCat = False # for barrel and endcap categories
@@ -41,7 +40,7 @@ h_Events = fInput.Get("HPhiGammaAnalysis/h_Events")
 
 #Trigger eff scale factors
 fInput_TwoProngsTriggerSF = ROOT.TFile("scale_factors/TwoProngsTriggerSF.root") 
-fInput_PhotonTriggerSF    = ROOT.TFile("scale_factors/Photon35TriggerSF.root") #Photon35 is the new histo containing SFs calculated changing the Photon eT threshold to 35 GeV at HLT level
+fInput_PhotonTriggerSF    = ROOT.TFile("scale_factors/Photon35TriggerSF_FSR.root") #Photon35 is the new histo containing SFs calculated changing the Photon eT threshold to 35 GeV at HLT level
 fInput_IsoChSF_barrel     = ROOT.TFile("scale_factors/IsoChEfficiencySF_barrel.root") 
 fInput_IsoChSF_endcap     = ROOT.TFile("scale_factors/IsoChEfficiencySF_endcap.root") 
 fInput_IsoNeuSF_barrel    = ROOT.TFile("scale_factors/IsoNeuEfficiencySF_barrel.root") 
@@ -82,7 +81,7 @@ if CRflag > 0 :
 else :
     print "Processing the signal region" 
 
-if (args.isBDT_option == "BDT0" or args.isBDT_option == "BDT1"):
+if (args.isBDT_option == "BDT0" or args.isBDT_option == "BDT1" or args.isBDT_option == "custom"):
     isBDT = True
     fInputBDT = ROOT.TFile("MVA/BDToutput.root","READ")
     BDTtree = fInputBDT.Get("BDTtree")
@@ -167,7 +166,7 @@ if not isK0sAnalysis:
 histo_map[list_histos[0]]  = ROOT.TH1F(list_histos[0],"M_{H}",140,100.,170.) 
 if   isPhiAnalysis: histo_map[list_histos[1]]  = ROOT.TH1F(list_histos[1],"M_{meson}", 100, 1., 1.05) 
 elif isRhoAnalysis: histo_map[list_histos[1]]  = ROOT.TH1F(list_histos[1],"M_{meson}", 100, 0.5, 1.) 
-elif isK0sAnalysis: histo_map[list_histos[1]]  = ROOT.TH1F(list_histos[1],"M_{meson}", 100, 0.6, 1.) 
+elif isK0sAnalysis: histo_map[list_histos[1]]  = ROOT.TH1F(list_histos[1],"M_{meson}", 100, 0.8, 1.) 
 histo_map[list_histos[2]]  = ROOT.TH1F(list_histos[2],"p_{T} of the 1st track", 100, 20.,60.)
 if   isPhiAnalysis: histo_map[list_histos[3]]  = ROOT.TH1F(list_histos[3],"p_{T} of the 2nd track", 100, 11.,55.)
 elif isRhoAnalysis: histo_map[list_histos[3]]  = ROOT.TH1F(list_histos[3],"p_{T} of the 2nd track", 100, 5.,50.)
@@ -259,6 +258,7 @@ _bestCoupleDeltaR    = np.zeros(1, dtype=float)
 _photonEta           = np.zeros(1, dtype=float)  
 _eventWeight         = np.zeros(1, dtype=float)
 _BDTweight           = np.zeros(1, dtype=float)
+_BDTdisc             = np.zeros(1, dtype=float)
 _metPt               = np.zeros(1, dtype=float)
 _nJets               = np.zeros(1, dtype=float)
 _nPV                 = np.zeros(1, dtype=int)
@@ -293,6 +293,7 @@ tree_output.Branch('_bestCoupleDeltaR',_bestCoupleDeltaR,'_bestCoupleDeltaR/D')
 tree_output.Branch('_photonEta',_photonEta,'_photonEta/D')
 tree_output.Branch('_eventWeight',_eventWeight,'_eventWeight/D')
 tree_output.Branch('_BDTweight',_BDTweight,'_BDTweight/D')
+tree_output.Branch('_BDTdisc',_BDTdisc,'_BDTdisc/D')
 tree_output.Branch('_metPt',_metPt,'_metPt/D')
 tree_output.Branch('_nJets',_nJets,'_nJets/D')
 tree_output.Branch('_dPhiGammaTrk',_dPhiGammaTrk,'_dPhiGammaTrk/D')
@@ -329,6 +330,7 @@ if not isBDT:
     tree_output_forMVA.Branch('_photonEta',_photonEta,'_photonEta/D')
     tree_output_forMVA.Branch('_eventWeight',_eventWeight,'_eventWeight/D')
     tree_output_forMVA.Branch('_BDTweight',_BDTweight,'_BDTweight/D')
+    tree_output_forMVA.Branch('_BDTdisc',_BDTdisc,'_BDTdisc/D')
     tree_output_forMVA.Branch('_metPt',_metPt,'_metPt/D')
     tree_output_forMVA.Branch('_nJets',_nJets,'_nJets/D')
     tree_output_forMVA.Branch('_dPhiGammaTrk',_dPhiGammaTrk,'_dPhiGammaTrk/D')
@@ -448,7 +450,8 @@ for jentry in xrange(nentries):
     # Trigger studies ------------------- 
     if not isTrigger: continue
     #if MesonPt < 100.: continue
-    if isBDT: #FIXMEEEEEEEEE
+    
+    if isBDT: 
         if MesonIso0 < 0.8:  continue
     
     # -----------------------------------
@@ -685,6 +688,7 @@ for jentry in xrange(nentries):
     if (Hmass < 100. or Hmass > 170.): continue
 
     #TIGHT SELECTION from BDT output -------------------------------------------------  
+    BDT_out = 1. #to be initialized
     if isBDT: 
         BDT_out = myWF.get_BDT_output(firstTrkisoCh,MesonPt,photonEt,MesonEta,Hmass)#,JetNeutralEmEn,JetChargedHadEn,JetNeutralHadEn)  MesonIso0 
         #histo_map["h_BDT_out"].Fill(BDT_out)
@@ -697,6 +701,11 @@ for jentry in xrange(nentries):
         
         if args.isBDT_option == "BDT1":
             if (BDT_out < -0.4 or BDT_out > BDT_OUT):
+                if debug: print "BDT cut NOT passed"
+                continue
+
+        if args.isBDT_option == "custom":
+            if (BDT_out < -0.4 or BDT_out > 1.):
                 if debug: print "BDT cut NOT passed"
                 continue
 
@@ -823,6 +832,7 @@ for jentry in xrange(nentries):
     _photonEta[0]         = photonEta  
     _eventWeight[0]       = eventWeight
     _BDTweight[0]         = BDTweight
+    _BDTdisc[0]           = BDT_out
     _metPt[0]             = metPt
     _nJets[0]             = nJets
     _dPhiGammaTrk[0]      = dPhiGammaTrk

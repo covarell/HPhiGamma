@@ -46,20 +46,23 @@ CMS_lumi.cmsTextSize = 0.8
 CMS_lumi.lumi_13TeV = "39.54 fb^{-1}" 
 
 #Parameters of the PDF ---------------------------------------------------------------
-mass = ROOT.RooRealVar("mesonGammaMass","mesonGammaMass",110.,160.,"GeV")
-mass.setRange("LowSideband",110.,120.)
-mass.setRange("HighSideband",130.,160.)
-mass.setRange("full",110.,160.)
+xLowRange  = 110.
+xHighRange = 160.
+
+mass = ROOT.RooRealVar("mesonGammaMass","mesonGammaMass",xLowRange,xHighRange,"GeV")
+mass.setRange("LowSideband",xLowRange,120.)
+mass.setRange("HighSideband",130.,xHighRange)
+mass.setRange("full",xLowRange,xHighRange)
 
 #Initialize a Chebychev pdf
-a_bkg = ROOT.RooRealVar("a_bkg_chebychev_"+CHANNEL+"_GFcat_bdt0","a_bkg",-1.,-2.,0.)
-b_bkg = ROOT.RooRealVar("b_bkg_chebychev_"+CHANNEL+"_GFcat_bdt0","b_bkg",0.3,-1.,1.)
+a_bkg = ROOT.RooRealVar("a_bkg_chebychev_"+CHANNEL+"_GFcat_bdt0","a_bkg",-1.,-3.,0.)
+b_bkg = ROOT.RooRealVar("b_bkg_chebychev_"+CHANNEL+"_GFcat_bdt0","b_bkg",0.3,-3.,1.)
 c_bkg = ROOT.RooRealVar("c_bkg_chebychev_"+CHANNEL+"_GFcat_bdt0","c_bkg",-0.01,-1.,1.)
 d_bkg = ROOT.RooRealVar("d_bkg_chebychev_"+CHANNEL+"_GFcat_bdt0","d_bkg",-0.05,-0.2,0.1)
 f_bkg = ROOT.RooRealVar("e_bkg_chebychev_"+CHANNEL+"_GFcat_bdt0","e_bkg",-0.05,-0.1,0.)
 if isPhiGammaAnalysis:
-	bkgPDF_chebychev  = ROOT.RooChebychev("chebychev_GFcat_bdt0_bkg","bkgPDF",mass,ROOT.RooArgList(a_bkg, b_bkg, c_bkg))
-	bkgPDF_chebychev_Nplus1 = ROOT.RooChebychev("chebychev_Nplus1_GFcat_bdt0_bkg","bkgPDF",mass,ROOT.RooArgList(a_bkg,b_bkg,c_bkg,d_bkg))
+	bkgPDF_chebychev  = ROOT.RooChebychev("chebychev_GFcat_bdt0_bkg","bkgPDF",mass,ROOT.RooArgList(a_bkg, b_bkg))
+	bkgPDF_chebychev_Nplus1 = ROOT.RooChebychev("chebychev_Nplus1_GFcat_bdt0_bkg","bkgPDF",mass,ROOT.RooArgList(a_bkg,b_bkg,c_bkg))
 else:
 	bkgPDF_chebychev  = ROOT.RooChebychev("chebychev_GFcat_bdt0_bkg","bkgPDF",mass,ROOT.RooArgList(a_bkg, b_bkg))
 	bkgPDF_chebychev_Nplus1 = ROOT.RooChebychev("chebychev_Nplus1_GFcat_bdt0_bkg","bkgPDF",mass,ROOT.RooArgList(a_bkg,b_bkg,c_bkg))
@@ -78,16 +81,16 @@ bkgPDF_exponential = ROOT.RooExponential("exponential_GFcat_bdt0_bkg","bkgPDF",m
 #if CHANNEL == "Phi": bkgPDF_exponential = ROOT.RooExponential("exponential_GFcat_bdt0_bkg","bkgPDF",mass,e1_bkg)
 
 #Initialize a Bernstein pdf
-bern_c0 = ROOT.RooRealVar('bern_c0', 'bern_c0', 0.,0.1)
-bern_c1 = ROOT.RooRealVar('bern_c1', 'bern_c1', 0.,0.1)
-bern_c2 = ROOT.RooRealVar('bern_c2', 'bern_c2', 0.,0.1)
-bern_c3 = ROOT.RooRealVar('bern_c3', 'bern_c3', 0.,0.1)
-bern_c4 = ROOT.RooRealVar('bern_c4', 'bern_c4', 0., 5.)
-bern_c5 = ROOT.RooRealVar('bern_c5', 'bern_c5', 1e-2, 0., 0.1)
+bern_c0 = ROOT.RooRealVar("c0_bkg_bernstein_"+CHANNEL+"_GFcat_bdt0", 'bern_c0', 0.05)#0.05, 0.,0.1)
+bern_c1 = ROOT.RooRealVar("c1_bkg_bernstein_"+CHANNEL+"_GFcat_bdt0", 'bern_c1', 0.01, 0.,1.)
+bern_c2 = ROOT.RooRealVar("c2_bkg_bernstein_"+CHANNEL+"_GFcat_bdt0", 'bern_c2', 0.01, 0.,1.)
+bern_c3 = ROOT.RooRealVar("c3_bkg_bernstein_"+CHANNEL+"_GFcat_bdt0", 'bern_c3', 0.05, 0.,1.)
+bern_c4 = ROOT.RooRealVar("c4_bkg_bernstein_"+CHANNEL+"_GFcat_bdt0", 'bern_c4', 0.05, 0., 5.)
+bern_c5 = ROOT.RooRealVar("c5_bkg_bernstein_"+CHANNEL+"_GFcat_bdt0", 'bern_c5', 1e-2, 0., 0.1)
 if isPhiGammaAnalysis:
-	bkgPDF_bernstein = ROOT.RooBernstein("bernstein_GFcat_bdt0_bkg", "bkgPDF", mass, ROOT.RooArgList(bern_c0,bern_c1,bern_c2,bern_c3,bern_c4))
+	bkgPDF_bernstein = ROOT.RooBernstein("bernstein_GFcat_bdt0_bkg", "bkgPDF", mass, ROOT.RooArgList(bern_c0,bern_c1,bern_c2,bern_c3))
 else:
-	bkgPDF_bernstein = ROOT.RooBernstein("bernstein_GFcat_bdt0_bkg", "bkgPDF", mass, ROOT.RooArgList(bern_c0,bern_c1,bern_c2,bern_c3,bern_c4))
+	bkgPDF_bernstein = ROOT.RooBernstein("bernstein_GFcat_bdt0_bkg", "bkgPDF", mass, ROOT.RooArgList(bern_c0,bern_c1,bern_c2))
 #bkgPDF_bernstein = ROOT.RooBernstein("bernstein_GFcat_bdt0_bkg", "bkgPDF", mass, ROOT.RooArgList(bern_c0,bern_c1,bern_c2,bern_c3,bern_c4))
 
 #bkgPDF_bernstein  = ROOT.RooProdPdf("bkgPDF_bernstein","bkg PDF",ROOT.RooArgSet(e1_bkg,bkgPDF_bernstein1))
@@ -102,8 +105,25 @@ fileInput = ROOT.TFile("histos/latest_production/histos_SR_BDTcat0_Data.root")
 fileInput.cd()
 tree = fileInput.Get("tree_output")
 
+h_mass = ROOT.TH1F("h_mass","h_mass", int(xHighRange - xLowRange), xLowRange, xHighRange)
+
+nentries_histo = tree.GetEntriesFast()
+print "nentries_histo = ",nentries_histo
+
+for jentry in xrange(nentries_histo):
+    ientry = tree.LoadTree( jentry )
+    if ientry < 0:
+        break
+    nb = tree.GetEntry(jentry)
+    if nb <= 0:
+        print "nb < 0"
+        continue
+
+    h_mass.Fill(tree.mesonGammaMass, tree._eventWeight)
+
 #Retrieve observed_data from the tree, insert the variable also ---------------------------------------------------------------
 observed_data = ROOT.RooDataSet("observed_data","observed_data",ROOT.RooArgSet(mass),ROOT.RooFit.Import(tree))
+#observed_data = ROOT.RooDataHist("observed_data","observed_data",ROOT.RooArgList(mass),h_mass)
 nEntries = observed_data.numEntries() 
 print "nEntries = ",nEntries
 
@@ -129,7 +149,7 @@ canvas_chebychev.cd()
 
 #Chebychev frame
 if isPhiGammaAnalysis:
-	xframe_chebychev = mass.frame(40)
+	xframe_chebychev = mass.frame(30)
 else:
 	xframe_chebychev = mass.frame(60)
 

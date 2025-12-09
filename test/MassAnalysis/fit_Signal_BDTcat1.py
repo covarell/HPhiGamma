@@ -96,8 +96,8 @@ dCB_pole_VBF  = ROOT.RooRealVar("dCB_pole_"+CHANNEL+"_GFcat_bdt1_VBF", "Double C
 dCB_width_VBF = ROOT.RooRealVar("dCB_width_"+CHANNEL+"_GFcat_bdt1_VBF", "Double CB width",1.,0.,2.)
 dCB_aL_VBF    = ROOT.RooRealVar("dCB_aL_"+CHANNEL+"_GFcat_bdt1_VBF", "Double CB alpha left", 1.2, 0.5, 2.)
 dCB_aR_VBF    = ROOT.RooRealVar("dCB_aR_"+CHANNEL+"_GFcat_bdt1_VBF", "Double CB alpha right", 1.6, 0.5, 2.)
-dCB_nL_VBF    = ROOT.RooRealVar("dCB_nL_"+CHANNEL+"_GFcat_bdt1_VBF", "Double CB n left", 3., 1., 4.)
-dCB_nR_VBF    = ROOT.RooRealVar("dCB_nR_"+CHANNEL+"_GFcat_bdt1_VBF", "Double CB n right", 3.1, 1., 4.)
+dCB_nL_VBF    = ROOT.RooRealVar("dCB_nL_"+CHANNEL+"_GFcat_bdt1_VBF", "Double CB n left", 3., 1., 10.)
+dCB_nR_VBF    = ROOT.RooRealVar("dCB_nR_"+CHANNEL+"_GFcat_bdt1_VBF", "Double CB n right", 3.1, 1., 10.)
 
 signalPDF_ggH = ROOT.RooDoubleCBFast("crystal_ball_"+CHANNEL+"_GFcat_bdt1_ggH", "Double Crystal Ball", mass, dCB_pole_ggH, dCB_width_ggH, dCB_aL_ggH, dCB_nL_ggH, dCB_aR_ggH, dCB_nR_ggH)
 signalPDF_VBF = ROOT.RooDoubleCBFast("crystal_ball_"+CHANNEL+"_GFcat_bdt1_VBF", "Double Crystal Ball", mass, dCB_pole_VBF, dCB_width_VBF, dCB_aL_VBF, dCB_nL_VBF, dCB_aR_VBF, dCB_nR_VBF)
@@ -273,9 +273,9 @@ else:
 #create Workspace
 if CHANNEL == "K0s":
     norm_ggH     = fileInput_ggH.Get("h_InvMass_TwoTrk_Photon").Integral() #get the normalization of ggH signal (area under ggH signal)
-    sig_norm_ggH = ROOT.RooRealVar(signalPDF_ggH.GetName()+ "_norm", signalPDF_ggH.GetName()+ "_norm", 2*norm_ggH)
+    sig_norm_ggH = ROOT.RooRealVar(signalPDF_ggH.GetName()+ "_norm", signalPDF_ggH.GetName()+ "_norm", 0.6667*2*norm_ggH)
     norm_VBF     = fileInput_VBF.Get("h_InvMass_TwoTrk_Photon").Integral() #get the normalization of VBF signal (area under VBF signal)
-    sig_norm_VBF = ROOT.RooRealVar(signalPDF_VBF.GetName()+ "_norm", signalPDF_VBF.GetName()+ "_norm", 2*norm_VBF)
+    sig_norm_VBF = ROOT.RooRealVar(signalPDF_VBF.GetName()+ "_norm", signalPDF_VBF.GetName()+ "_norm", 0.6667*2*norm_VBF)
 else:
     norm_ggH     = fileInput_ggH.Get("h_InvMass_TwoTrk_Photon").Integral() #get the normalization of ggH signal (area under ggH signal)
     sig_norm_ggH = ROOT.RooRealVar(signalPDF_ggH.GetName()+ "_norm", signalPDF_ggH.GetName()+ "_norm", norm_ggH)

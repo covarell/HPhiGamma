@@ -77,12 +77,12 @@ bkgPDF_exponential_2param = ROOT.RooAddPdf("bkgPDF_exponential_2param","bkgPDF",
 bkgPDF_exponential = ROOT.RooAddPdf("exponential_GFcat_bkg","bkgPDF",ROOT.RooArgList(bkgPDF_exponential_2param,exp3),ROOT.RooArgList(frac1_exp))
 
 #Initialize a Bernstein pdf
-bern_c0 = ROOT.RooRealVar('bern_c0', 'bern_c0', 0.2, 0.,1.)
-bern_c1 = ROOT.RooRealVar('bern_c1', 'bern_c1', 0.1, 0.,1.)
-bern_c2 = ROOT.RooRealVar('bern_c2', 'bern_c2', 0.01, 0.,2.)
-bern_c3 = ROOT.RooRealVar('bern_c3', 'bern_c3', 0.01, 0.,1.)
-bern_c4 = ROOT.RooRealVar('bern_c4', 'bern_c4', 0.01, 0., 1.)
-bern_c5 = ROOT.RooRealVar('bern_c5', 'bern_c5', 1e-2, 0., 0.1)
+bern_c0 = ROOT.RooRealVar("c0_bkg_bernstein_"+CHANNEL+"_GFpreselection", 'bern_c0', 0.2, 0.,1.)
+bern_c1 = ROOT.RooRealVar("c1_bkg_bernstein_"+CHANNEL+"_GFpreselection", 'bern_c1', 0.1, 0.,1.)
+bern_c2 = ROOT.RooRealVar("c2_bkg_bernstein_"+CHANNEL+"_GFpreselection", 'bern_c2', 0.01, 0.,2.)
+bern_c3 = ROOT.RooRealVar("c3_bkg_bernstein_"+CHANNEL+"_GFpreselection", 'bern_c3', 0.01, 0.,1.)
+bern_c4 = ROOT.RooRealVar("c4_bkg_bernstein_"+CHANNEL+"_GFpreselection", 'bern_c4', 0.01, 0., 1.)
+bern_c5 = ROOT.RooRealVar("c5_bkg_bernstein_"+CHANNEL+"_GFpreselection", 'bern_c5', 1e-2, 0., 0.1)
 
 bkgPDF_bernstein = ROOT.RooBernstein("bernstein_GFpreselection_bkg", "bkgPDF", mass, ROOT.RooArgList(bern_c0,bern_c1,bern_c2,bern_c3,bern_c4,bern_c5))
 

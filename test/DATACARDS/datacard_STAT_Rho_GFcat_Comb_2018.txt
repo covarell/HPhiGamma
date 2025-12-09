@@ -26,8 +26,8 @@ CMS_isr                 lnN           0.97/1.03    0.995/1.005  -            0.9
 CMS_jes                 lnN           0.99/1.01    0.98/1.02    -            0.99/1.01    0.97/1.03    -          
 CMS_photonID            lnN           1.015        1.014        -            1.015        1.016        -          
 CMS_pileup              lnN           1.011        1.011        -            1.011        1.011        -          
-CMS_trackingEff         lnN           1.044        1.044        -            1.044        1.044        -          
-CMS_trig_PhotonLeg      lnN           1.012        1.014        -            1.014        1.016        -          
+CMS_trackingEff         lnN           1.048        1.048        -            1.044        1.044        -          
+CMS_trig_PhotonLeg      lnN           1.026        1.029        -            1.03         1.036        -          
 CMS_trig_TwoProngs      lnN           1.05         1.051        -            1.051        1.051        -          
 QCDscale_VBFH           lnN           -            0.997/1.004  -            -            0.997/1.004  -          
 QCDscale_ggH            lnN           0.961/1.039  -            -            0.961/1.039  -            -          

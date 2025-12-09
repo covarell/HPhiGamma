@@ -282,9 +282,9 @@ else:
 #create Workspace
 if CHANNEL == "K0s": #norm factor x2 to include the Kbar channel
     norm_ggH = fileInput_ggH.Get("h_InvMass_TwoTrk_Photon").Integral()  # get the normalization of ggH signal (area under ggH signal)
-    sig_norm_ggH = ROOT.RooRealVar(signalPDF_ggH.GetName() + "_norm", signalPDF_ggH.GetName() + "_norm", 2*norm_ggH)
+    sig_norm_ggH = ROOT.RooRealVar(signalPDF_ggH.GetName() + "_norm", signalPDF_ggH.GetName() + "_norm", 0.6667*2*norm_ggH)
     norm_VBF = fileInput_VBF.Get("h_InvMass_TwoTrk_Photon").Integral()  # get the normalization of VBF signal (area under VBF signal)
-    sig_norm_VBF = ROOT.RooRealVar(signalPDF_VBF.GetName() + "_norm", signalPDF_VBF.GetName() + "_norm", 2*norm_VBF)
+    sig_norm_VBF = ROOT.RooRealVar(signalPDF_VBF.GetName() + "_norm", signalPDF_VBF.GetName() + "_norm", 0.6667*2*norm_VBF)
 else:
     norm_ggH = fileInput_ggH.Get("h_InvMass_TwoTrk_Photon").Integral()  # get the normalization of ggH signal (area under ggH signal)
     sig_norm_ggH = ROOT.RooRealVar(signalPDF_ggH.GetName() + "_norm", signalPDF_ggH.GetName() + "_norm", norm_ggH)

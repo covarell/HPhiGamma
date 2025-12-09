@@ -56,6 +56,7 @@ private:
   float currentMuMuPt;
   float bestMuMuPt;
   float bestMuMuMass;
+  float bestMuMuGammaMass;
   float ph_eT;
   float ph_eta;
   float ph_etaSC;

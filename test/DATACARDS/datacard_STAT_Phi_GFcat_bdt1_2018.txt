@@ -25,7 +25,7 @@ QCDscale_VBFH 	    lnN	       -	   0.997/1.004	-
 pdf_Higgs_VBFH 	    lnN	       -	   0.979/1.021	-
 CMS_pileup          lnN      1.012        1.011     -
 CMS_trig_TwoProngs  lnN      1.051        1.051     - 
-CMS_trig_PhotonLeg  lnN      1.014        1.016     - 
+CMS_trig_PhotonLeg  lnN      1.031        1.030     - 
 CMS_photonID        lnN      1.015        1.015     - 
 CMS_IsoEff          lnN      1.012        1.012     - 
 CMS_jes  	        lnN 	0.99/1.01	0.98/1.02	-

@@ -85,19 +85,34 @@ for jentry in xrange(nentries_VBF):
 mass = ROOT.RooRealVar("mesonGammaMass", "mesonGammaMass", 125., xLowRange, xHighRange, "GeV/c^2")
 
 #Double Crystal Ball definition ---------------------------------------------------------------
-dCB_pole_ggH  = ROOT.RooRealVar("dCB_pole_"+CHANNEL+"_GFcat_bdt0_ggH", "Double CB pole", 125.,122.,127.)
-dCB_width_ggH = ROOT.RooRealVar("dCB_width_"+CHANNEL+"_GFcat_bdt0_ggH", "Double CB width",0.8,0.5,1.5)
-dCB_aL_ggH    = ROOT.RooRealVar("dCB_aL_"+CHANNEL+"_GFcat_bdt0_ggH", "Double CB alpha left", 1.2, 1., 2.)
-dCB_aR_ggH    = ROOT.RooRealVar("dCB_aR_"+CHANNEL+"_GFcat_bdt0_ggH", "Double CB alpha right", 1.5, 1., 2.)
-dCB_nL_ggH    = ROOT.RooRealVar("dCB_nL_"+CHANNEL+"_GFcat_bdt0_ggH", "Double CB n left", 3.1, 0.1, 4.)
-dCB_nR_ggH    = ROOT.RooRealVar("dCB_nR_"+CHANNEL+"_GFcat_bdt0_ggH", "Double CB n right", 3.4, 0.1, 4.)
+if isPhiGammaAnalysis:
+    dCB_pole_ggH  = ROOT.RooRealVar("dCB_pole_"+CHANNEL+"_GFcat_bdt0_ggH", "Double CB pole", 125.,122.,127.)
+    dCB_width_ggH = ROOT.RooRealVar("dCB_width_"+CHANNEL+"_GFcat_bdt0_ggH", "Double CB width",0.8,0.5,1.5)
+    dCB_aL_ggH    = ROOT.RooRealVar("dCB_aL_"+CHANNEL+"_GFcat_bdt0_ggH", "Double CB alpha left", 1.2, 1., 2.)
+    dCB_aR_ggH    = ROOT.RooRealVar("dCB_aR_"+CHANNEL+"_GFcat_bdt0_ggH", "Double CB alpha right", 1.5, 1., 2.)
+    dCB_nL_ggH    = ROOT.RooRealVar("dCB_nL_"+CHANNEL+"_GFcat_bdt0_ggH", "Double CB n left", 3.1, 0.1, 10.)
+    dCB_nR_ggH    = ROOT.RooRealVar("dCB_nR_"+CHANNEL+"_GFcat_bdt0_ggH", "Double CB n right", 3.4, 0.1, 10.)
 
-dCB_pole_VBF  = ROOT.RooRealVar("dCB_pole_"+CHANNEL+"_GFcat_bdt0_VBF", "Double CB pole", 125.,120.,130.)
-dCB_width_VBF = ROOT.RooRealVar("dCB_width_"+CHANNEL+"_GFcat_bdt0_VBF", "Double CB width",1.,0.,2.)
-dCB_aL_VBF    = ROOT.RooRealVar("dCB_aL_"+CHANNEL+"_GFcat_bdt0_VBF", "Double CB alpha left", 1.2, 1., 1.5)
-dCB_aR_VBF    = ROOT.RooRealVar("dCB_aR_"+CHANNEL+"_GFcat_bdt0_VBF", "Double CB alpha right", 1.56, 1., 1.7)
-dCB_nL_VBF    = ROOT.RooRealVar("dCB_nL_"+CHANNEL+"_GFcat_bdt0_VBF", "Double CB n left", 3., 1., 4.)
-dCB_nR_VBF    = ROOT.RooRealVar("dCB_nR_"+CHANNEL+"_GFcat_bdt0_VBF", "Double CB n right", 3., 1., 4.)
+    dCB_pole_VBF  = ROOT.RooRealVar("dCB_pole_"+CHANNEL+"_GFcat_bdt0_VBF", "Double CB pole", 125.,120.,130.)
+    dCB_width_VBF = ROOT.RooRealVar("dCB_width_"+CHANNEL+"_GFcat_bdt0_VBF", "Double CB width",1.,0.,2.)
+    dCB_aL_VBF    = ROOT.RooRealVar("dCB_aL_"+CHANNEL+"_GFcat_bdt0_VBF", "Double CB alpha left", 1.2, 1., 3.5)
+    dCB_aR_VBF    = ROOT.RooRealVar("dCB_aR_"+CHANNEL+"_GFcat_bdt0_VBF", "Double CB alpha right", 1.56, 1., 3.7)
+    dCB_nL_VBF    = ROOT.RooRealVar("dCB_nL_"+CHANNEL+"_GFcat_bdt0_VBF", "Double CB n left", 3., 1., 10.)
+    dCB_nR_VBF    = ROOT.RooRealVar("dCB_nR_"+CHANNEL+"_GFcat_bdt0_VBF", "Double CB n right", 3., 1., 10.)
+else:
+    dCB_pole_ggH  = ROOT.RooRealVar("dCB_pole_"+CHANNEL+"_GFcat_bdt0_ggH", "Double CB pole", 125.,122.,127.)
+    dCB_width_ggH = ROOT.RooRealVar("dCB_width_"+CHANNEL+"_GFcat_bdt0_ggH", "Double CB width",0.8,0.5,1.5)
+    dCB_aL_ggH    = ROOT.RooRealVar("dCB_aL_"+CHANNEL+"_GFcat_bdt0_ggH", "Double CB alpha left", 1.2, 1., 2.)
+    dCB_aR_ggH    = ROOT.RooRealVar("dCB_aR_"+CHANNEL+"_GFcat_bdt0_ggH", "Double CB alpha right", 1.5, 1., 2.)
+    dCB_nL_ggH    = ROOT.RooRealVar("dCB_nL_"+CHANNEL+"_GFcat_bdt0_ggH", "Double CB n left", 3.1, 0.1, 4.)
+    dCB_nR_ggH    = ROOT.RooRealVar("dCB_nR_"+CHANNEL+"_GFcat_bdt0_ggH", "Double CB n right", 3.4, 0.1, 4.)
+
+    dCB_pole_VBF  = ROOT.RooRealVar("dCB_pole_"+CHANNEL+"_GFcat_bdt0_VBF", "Double CB pole", 125.,120.,130.)
+    dCB_width_VBF = ROOT.RooRealVar("dCB_width_"+CHANNEL+"_GFcat_bdt0_VBF", "Double CB width",1.,0.,2.)
+    dCB_aL_VBF    = ROOT.RooRealVar("dCB_aL_"+CHANNEL+"_GFcat_bdt0_VBF", "Double CB alpha left", 1.2, 1., 2.5)
+    dCB_aR_VBF    = ROOT.RooRealVar("dCB_aR_"+CHANNEL+"_GFcat_bdt0_VBF", "Double CB alpha right", 1.56, 1., 1.7)
+    dCB_nL_VBF    = ROOT.RooRealVar("dCB_nL_"+CHANNEL+"_GFcat_bdt0_VBF", "Double CB n left", 3., 1., 4.)
+    dCB_nR_VBF    = ROOT.RooRealVar("dCB_nR_"+CHANNEL+"_GFcat_bdt0_VBF", "Double CB n right", 3., 1., 4.)
 
 signalPDF_ggH = ROOT.RooDoubleCBFast("crystal_ball_"+CHANNEL+"_GFcat_bdt0_ggH", "Double Crystal Ball", mass, dCB_pole_ggH, dCB_width_ggH, dCB_aL_ggH, dCB_nL_ggH, dCB_aR_ggH, dCB_nR_ggH)
 signalPDF_VBF = ROOT.RooDoubleCBFast("crystal_ball_"+CHANNEL+"_GFcat_bdt0_VBF", "Double Crystal Ball", mass, dCB_pole_VBF, dCB_width_VBF, dCB_aL_VBF, dCB_nL_VBF, dCB_aR_VBF, dCB_nR_VBF)
@@ -219,7 +234,7 @@ signalPDF_VBF.paramOn(xframe_VBF,ROOT.RooFit.Layout(0.53,0.94,0.91),ROOT.RooFit.
 xframe_VBF.getAttText().SetLineWidth(0)
 xframe_VBF.getAttText().SetTextSize(0.019)
 xframe_VBF.GetXaxis().SetTitle("m_{ditrk,#gamma} [GeV]")
-xframe_VBF.GetXaxis().SetRangeUser(110.,160.)
+xframe_VBF.GetXaxis().SetRangeUser(xLowRange,xHighRange)
 xframe_VBF.GetYaxis().SetMaxDigits(2)
 
 # ChiSquare test ---------------------------------------------------------------------------------------------------------------------------
@@ -273,9 +288,9 @@ else:
 #create Workspace
 if CHANNEL == "K0s": #norm factor x2 to include the Kbar channel
     norm_ggH     = fileInput_ggH.Get("h_InvMass_TwoTrk_Photon").Integral() #get the normalization of ggH signal (area under ggH signal)
-    sig_norm_ggH = ROOT.RooRealVar(signalPDF_ggH.GetName()+ "_norm", signalPDF_ggH.GetName()+ "_norm", 2*norm_ggH) 
+    sig_norm_ggH = ROOT.RooRealVar(signalPDF_ggH.GetName()+ "_norm", signalPDF_ggH.GetName()+ "_norm", 0.6667*2*norm_ggH) 
     norm_VBF     = fileInput_VBF.Get("h_InvMass_TwoTrk_Photon").Integral() #get the normalization of VBF signal (area under VBF signal)
-    sig_norm_VBF = ROOT.RooRealVar(signalPDF_VBF.GetName()+ "_norm", signalPDF_VBF.GetName()+ "_norm", 2*norm_VBF)
+    sig_norm_VBF = ROOT.RooRealVar(signalPDF_VBF.GetName()+ "_norm", signalPDF_VBF.GetName()+ "_norm", 0.6667*2*norm_VBF)
 else:
     norm_ggH     = fileInput_ggH.Get("h_InvMass_TwoTrk_Photon").Integral() #get the normalization of ggH signal (area under ggH signal)
     sig_norm_ggH = ROOT.RooRealVar(signalPDF_ggH.GetName()+ "_norm", signalPDF_ggH.GetName()+ "_norm", norm_ggH)

@@ -34,14 +34,13 @@ options.parseArguments()
 if options.runningOnData:
    process.GlobalTag = GlobalTag(process.GlobalTag, '102X_dataRun2_Sep2018ABC_v2')
    inputFiles = {#"/store/data/Run2018B/SingleMuon/MINIAOD/UL2018_MiniAODv2-v2/100000/B29BDCC8-5429-7244-96D9-A5BF6C04BB73.root",
-                 "/store/data/Run2018B/SingleMuon/MINIAOD/UL2018_MiniAODv2-v2/110000/00A4B13C-EBCD-6C46-93D7-FA721EA4DB41.root"}#,
+                 "/store/data/Run2018C/SingleMuon/MINIAOD/UL2018_MiniAODv2-v2/130000/3DF3944A-36D3-FC41-A7A0-C91A05B79081.root"}#,
                  #"/store/data/Run2018B/SingleMuon/MINIAOD/UL2018_MiniAODv2-v2/110000/012BD380-53E6-4B4E-802B-3F96BF7DA0E5.root",
                  #"/store/data/Run2018B/SingleMuon/MINIAOD/UL2018_MiniAODv2-v2/110000/027C0A31-BD7E-F04A-99C0-067C4F606BD1.root"}
-
 else:
    process.GlobalTag = GlobalTag(process.GlobalTag, '102X_upgrade2018_realistic_v18')
-   inputFiles = {"/store/mc/RunIISummer20UL18MiniAOD/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v11_L1v1-v1/260000/2F159C58-478B-7B4B-A93C-C4556F4241EE.root","/store/mc/RunIISummer20UL18MiniAOD/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v11_L1v1-v1/260000/00EE6A89-FB71-904B-BE2D-8EFC31B58136.root"}
-   
+   inputFiles = {"/store/mc/RunIISummer20UL18MiniAOD/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v11_L1v1-v1/260000/0071F930-6376-7A48-89F1-74E189BD3BFC.root"}
+
 process.source = cms.Source ("PoolSource",
                              fileNames = cms.untracked.vstring (inputFiles),
                              duplicateCheckMode = cms.untracked.string ('noDuplicateCheck')
