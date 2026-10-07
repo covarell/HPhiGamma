@@ -57,31 +57,27 @@ for jentry in range(nentries_ggH):
 bosonMass = ROOT.RooRealVar("bosonMass", "bosonMass", 125., xLowRange, xHighRange, "GeV/c^2")
 
 #Double Crystal Ball definition ---------------------------------------------------------------
-#dCB_pole_ggH  = ROOT.RooRealVar("dCB_pole_"+CHANNEL+"_GFcat_bdt0_ggH", "Double CB pole", 120.,118.,122.)
-#dCB_width_ggH = ROOT.RooRealVar("dCB_width_"+CHANNEL+"_GFcat_bdt0_ggH", "Double CB width",2.,0.5,4.5)
-#dCB_aL_ggH    = ROOT.RooRealVar("dCB_aL_"+CHANNEL+"_GFcat_bdt0_ggH", "Double CB alpha left", 1.2, 1., 5.)
-#dCB_aR_ggH    = ROOT.RooRealVar("dCB_aR_"+CHANNEL+"_GFcat_bdt0_ggH", "Double CB alpha right", 1.5, 1., 5.)
-#dCB_nL_ggH    = ROOT.RooRealVar("dCB_nL_"+CHANNEL+"_GFcat_bdt0_ggH", "Double CB n left", 3.1, 0.1, 4.)
-#dCB_nR_ggH    = ROOT.RooRealVar("dCB_nR_"+CHANNEL+"_GFcat_bdt0_ggH", "Double CB n right", 3.1, 0.1, 4.)
-gauss_mean_ggH     = ROOT.RooRealVar("gauss_mean_"+CHANNEL+"_GFcat_bdt0_ggH", "Gaussian width", 121., 118., 122.)
-gauss_width_ggH    = ROOT.RooRealVar("gauss_width_"+CHANNEL+"_GFcat_bdt0_ggH", "Gaussian width", 2., 1.5, 5.)
-f_gauss_ggH        = ROOT.RooRealVar("f_gauss_"+CHANNEL+"_GFcat_bdt0_ggH", "Gaussian fraction", 0.3, 0.2, 0.4)
-gauss_mean_ggH     = ROOT.RooRealVar("gauss_mean_"+CHANNEL+"_GFcat_bdt0_ggH", "Gaussian width", 121., 118., 122.)
-gauss2_width_ggH    = ROOT.RooRealVar("gauss2_width_"+CHANNEL+"_GFcat_bdt0_ggH", "Gaussian width 2", 5., 2.5, 7.5)
-f_gauss2_ggH        = ROOT.RooRealVar("f_gauss2_"+CHANNEL+"_GFcat_bdt0_ggH", "Gaussian fraction 2", 0.1, 0.02, 0.2)
-#ellpis_axis_ggH     = ROOT.RooRealVar("ellpis_axis_ggH", "Axis ellipse", 5.5, 3., 8.)
-#ellpis_cent_ggH     = ROOT.RooRealVar("ellpis_cent_ggH", "Center ellipse", 120.5, 118., 123.)
-#f_ellpis_ggH        = ROOT.RooRealVar("f_ellpis"+CHANNEL+"_GFcat_bdt0_ggH", "Ellipse fraction", 0.3, 0.1, 0.6)
+dCB_pole_ggH  = ROOT.RooRealVar("dCB_pole_"+CHANNEL+"_GFcat_bdt0_ggH", "Double CB pole", 120.,118.,122.)
+dCB_width_ggH = ROOT.RooRealVar("dCB_width_"+CHANNEL+"_GFcat_bdt0_ggH", "Double CB width",2.,0.5,4.5)
+dCB_aL_ggH    = ROOT.RooRealVar("dCB_aL_"+CHANNEL+"_GFcat_bdt0_ggH", "Double CB alpha left", 1.2, 1., 5.)
+dCB_aR_ggH    = ROOT.RooRealVar("dCB_aR_"+CHANNEL+"_GFcat_bdt0_ggH", "Double CB alpha right", 1.5, 1., 5.)
+dCB_nL_ggH    = ROOT.RooRealVar("dCB_nL_"+CHANNEL+"_GFcat_bdt0_ggH", "Double CB n left", 3.1, 0.1, 4.)
+dCB_nR_ggH    = ROOT.RooRealVar("dCB_nR_"+CHANNEL+"_GFcat_bdt0_ggH", "Double CB n right", 3.1, 0.1, 4.)
+#gauss_mean_ggH     = ROOT.RooRealVar("gauss_mean_"+CHANNEL+"_GFcat_bdt0_ggH", "Gaussian width", 121., 118., 122.)
+#gauss_width_ggH    = ROOT.RooRealVar("gauss_width_"+CHANNEL+"_GFcat_bdt0_ggH", "Gaussian width", 2., 1.5, 5.)
+#f_gauss_ggH        = ROOT.RooRealVar("f_gauss_"+CHANNEL+"_GFcat_bdt0_ggH", "Gaussian fraction", 0.3, 0.2, 0.4)
+ellpis_axis_ggH     = ROOT.RooRealVar("ellpis_axis_ggH", "Axis ellipse", 5.5, 3., 8.)
+ellpis_cent_ggH     = ROOT.RooRealVar("ellpis_cent_ggH", "Center ellipse", 120.5, 118., 123.)
+f_ellpis_ggH        = ROOT.RooRealVar("f_ellpis"+CHANNEL+"_GFcat_bdt0_ggH", "Ellipse fraction", 0.3, 0.1, 0.6)
 
 dcb_ggH = ROOT.RooDoubleCBFast("crystal_ball_"+CHANNEL+"_GFcat_bdt0_ggH", "Double Crystal Ball", bosonMass, dCB_pole_ggH, dCB_width_ggH, dCB_aL_ggH, dCB_nL_ggH, dCB_aR_ggH, dCB_nR_ggH)
-gauss_ggH = ROOT.RooGaussian("gauss_"+CHANNEL+"_GFcat_bdt0_ggH", "Gaussian", bosonMass, gauss_mean_ggH, gauss_width_ggH)
-gauss2_ggH = ROOT.RooGaussian("gauss2_"+CHANNEL+"_GFcat_bdt0_ggH", "Gaussian", bosonMass, gauss_mean_ggH, gauss2_width_ggH)
-#halfEllipse_ggH = ROOT.RooGenericPdf(
-#    "halfEllipse_ggH",
-#    "((abs(bosonMass-ellpis_cent_ggH) < ellpis_axis_ggH) ? sqrt(1 - ((bosonMass-ellpis_cent_ggH)/ellpis_axis_ggH)^2) : 0)",
-#    ROOT.RooArgList(bosonMass, ellpis_cent_ggH, ellpis_axis_ggH)
-#)
-signalPDF_ggH = ROOT.RooAddPdf("signalPDF_"+CHANNEL+"_GFcat_bdt0_ggH", "total",ROOT.RooArgList(gauss_ggH,gauss2_ggH,dcb_ggH),ROOT.RooArgList(f_gauss_ggH,f_gauss2_ggH))
+#gauss_ggH = ROOT.RooGaussian("gauss_"+CHANNEL+"_GFcat_bdt0_ggH", "Gaussian", bosonMass, gauss_mean_ggH, gauss_width_ggH)
+halfEllipse_ggH = ROOT.RooGenericPdf(
+    "halfEllipse_ggH",
+    "((abs(bosonMass-ellpis_cent_ggH) < 0.9*ellpis_axis_ggH) ? sqrt(1 - ((bosonMass-ellpis_cent_ggH)/ellpis_axis_ggH)^2) :  2.2026*exp(-2*(bosonMass-ellpis_cent_ggH)^2/ellpis_axis_ggH^2))",
+    ROOT.RooArgList(bosonMass, ellpis_cent_ggH, ellpis_axis_ggH)
+)
+signalPDF_ggH = ROOT.RooAddPdf("signalPDF_"+CHANNEL+"_GFcat_bdt0_ggH", "total",ROOT.RooArgList(halfEllipse_ggH,dcb_ggH),ROOT.RooArgList(f_ellpis_ggH))
 
 
 #Input tree ------------------------------------------------------------------------------------------------------------------------------
