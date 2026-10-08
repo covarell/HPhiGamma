@@ -38,7 +38,7 @@ iPos = 11
 xLowRange  = 110.
 xHighRange = 140.
 
-h_mH_ggH = ROOT.TH1F("h_mH_ggH","h_mH_ggH", int(xHighRange - xLowRange)*10, xLowRange, xHighRange)
+h_mH_ggH = ROOT.TH1F("h_mH_ggH","h_mH_ggH", int(xHighRange - xLowRange)*4, xLowRange, xHighRange)
 
 nentries_ggH = tree_ggH.GetEntriesFast()
 
@@ -66,16 +66,18 @@ dCB_nR_ggH    = ROOT.RooRealVar("dCB_nR_"+CHANNEL+"_GFcat_bdt1_ggH", "Double CB 
 #gauss_mean_ggH     = ROOT.RooRealVar("gauss_mean_"+CHANNEL+"_GFcat_bdt1_ggH", "Gaussian width", 121., 118., 122.)
 #gauss_width_ggH    = ROOT.RooRealVar("gauss_width_"+CHANNEL+"_GFcat_bdt1_ggH", "Gaussian width", 2., 1.5, 5.)
 #f_gauss_ggH        = ROOT.RooRealVar("f_gauss_"+CHANNEL+"_GFcat_bdt1_ggH", "Gaussian fraction", 0.3, 0.2, 0.4)
-ellpis_axis_ggH     = ROOT.RooRealVar("ellpis_axis_ggH", "Axis ellipse", 5.5, 3., 8.)
-ellpis_cent_ggH     = ROOT.RooRealVar("ellpis_cent_ggH", "Center ellipse", 120.5, 118., 123.)
-f_ellpis_ggH        = ROOT.RooRealVar("f_ellpis"+CHANNEL+"_GFcat_bdt1_ggH", "Ellipse fraction", 0.3, 0.1, 0.6)
+ellpis_axis_ggH     = ROOT.RooRealVar("ellpis_axis_"+CHANNEL+"_GFcat_bdt1_ggH", "Axis ellipse", 5.5, 3., 8.)
+ellpis_cent_ggH     = ROOT.RooRealVar("ellpis_cent_"+CHANNEL+"_GFcat_bdt1_ggH", "Center ellipse", 120.5, 118., 123.)
+f_ellpis_ggH        = ROOT.RooRealVar("f_ellpis_"+CHANNEL+"_GFcat_bdt1_ggH", "Ellipse fraction", 0.3, 0.1, 0.6)
+r_ellpis            = ROOT.RooRealVar("r_ellpis_"+CHANNEL+"_GFcat_bdt1_ggH", "Ellipse normalization", 0.88, 0.0, 1.0)
+r_ellpis.setConstant(True)
 
 dcb_ggH = ROOT.RooDoubleCBFast("crystal_ball_"+CHANNEL+"_GFcat_bdt1_ggH", "Double Crystal Ball", bosonMass, dCB_pole_ggH, dCB_width_ggH, dCB_aL_ggH, dCB_nL_ggH, dCB_aR_ggH, dCB_nR_ggH)
 #gauss_ggH = ROOT.RooGaussian("gauss_"+CHANNEL+"_GFcat_bdt1_ggH", "Gaussian", bosonMass, gauss_mean_ggH, gauss_width_ggH)
 halfEllipse_ggH = ROOT.RooGenericPdf(
     "halfEllipse_ggH",
-    "((abs(bosonMass-ellpis_cent_ggH) < 0.9*ellpis_axis_ggH) ? sqrt(1 - ((bosonMass-ellpis_cent_ggH)/ellpis_axis_ggH)^2) :  2.2026*exp(-2*(bosonMass-ellpis_cent_ggH)^2/ellpis_axis_ggH^2))",
-    ROOT.RooArgList(bosonMass, ellpis_cent_ggH, ellpis_axis_ggH)
+    "((abs(bosonMass-ellpis_cent_Dstar_GFcat_bdt1_ggH) < r_ellpis_Dstar_GFcat_bdt1_ggH*ellpis_axis_Dstar_GFcat_bdt1_ggH) ? sqrt(1 - ((bosonMass-ellpis_cent_Dstar_GFcat_bdt1_ggH)/ellpis_axis_Dstar_GFcat_bdt1_ggH)^2) : sqrt(1-r_ellpis_Dstar_GFcat_bdt1_ggH^2)*exp(-2*(bosonMass-ellpis_cent_Dstar_GFcat_bdt1_ggH)^2/ellpis_axis_Dstar_GFcat_bdt1_ggH^2)* exp(2*r_ellpis_Dstar_GFcat_bdt1_ggH^2))",
+    ROOT.RooArgList(bosonMass, ellpis_cent_ggH, ellpis_axis_ggH, r_ellpis)
 )
 signalPDF_ggH = ROOT.RooAddPdf("signalPDF_"+CHANNEL+"_GFcat_bdt1_ggH", "total",ROOT.RooArgList(halfEllipse_ggH,dcb_ggH),ROOT.RooArgList(f_ellpis_ggH))
 
@@ -136,7 +138,7 @@ xframe_ggH.Draw()
 if includeResiduals:
     c1.cd(2)  # Activate the second pad for the residuals plot
     c1.GetPad(2).SetBottomMargin(0.15)  # Increase the empty space at the bottom of the residuals plot
-    residuals = xframe_ggH.residHist()
+    residuals = xframe_ggH.pullHist()
     residuals.SetFillColor(ROOT.kBlue)
     residuals.SetMarkerColor(ROOT.kBlack)
     residuals.GetYaxis().SetTitle("Resid")
